@@ -29,7 +29,7 @@ base:
       args: -O2 -Wall -o foo.exe foo.c -std=c11 -target i386-pc-win32 -fno-ms-compatibility
     _vc:
       command: cl
-      args: /GS /GL /analyze- /W3 /Gy /Zc:wchar_t /Gm- /O2 /Zc:inline /fp:precise /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /WX- /Zc:forScope /Gd /Oy- /Oi /MD /EHsc /nologo foo.c
+      args: /utf-8 /GS /GL /analyze- /W3 /Gy /Zc:wchar_t /Gm- /O2 /Zc:inline /fp:precise /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /WX- /Zc:forScope /Gd /Oy- /Oi /MD /EHsc /nologo foo.c
     gcc51c11:
       extend: [_base, _gcc11]
       env:
@@ -53,19 +53,8 @@ base:
     # relative to the working directory
     args: ../../../reversi-judge/.dist/bootstrap.js --config config.json
   mq:
-    vhosts:
-      /:
-        connection:
-          hostname: 22.22.22.22
-          user: guest
-          password: guest
-        queues:
-          - reversi_compile
-          - reversi_judge
-        subscriptions:
-          compile:
-            queue: reversi_compile
-            prefetch: 1  # don't modify it! only one submission at a time!
-          judge:
-            queue: reversi_judge
-            prefetch: 1  # set to number of floor((CPUs - 1) / 2)
+    connection:
+      hostname: 22.22.22.22
+      username: guest
+      password: guest
+      heartbeat: 30
